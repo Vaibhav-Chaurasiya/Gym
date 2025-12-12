@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XCoachKart - Premium Fitness Coaching | Ex-IAF Trainer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { 
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        :root {
+            --gold: #D4AF37;
+            --gold-dark: #C9A227;
+            --gold-light: #F4E5A1;
+        }
+        
+        html { scroll-behavior: smooth; }
+        body { background: #000; color: #fff; overflow-x: hidden; }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(212, 175, 55, 0.8); }
+        }
+        
+        @keyframes bounceArrow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+        
+        .fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+        .gold-glow { animation: pulseGlow 2s infinite; }
+        .bounce-arrow { animation: bounceArrow 2s infinite; }
+        
+        /* Gold Gradient Text */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #D4AF37 0%, #F4E5A1 50%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            z-index: 50;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        
+        nav.scrolled {
+            background: rgba(0,0,0,0.98);
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.2);
+        }
+        
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
+        }
+        
+        .logo { 
+            font-size: 1.5rem; 
+            font-weight: 900;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-links {
+            display: none;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a:not(.btn-gold)::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:not(.btn-gold):hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover { 
+            color: var(--gold);
+        }
+        
+        .mobile-menu-btn {
+            display: block;
+            background: none;
+            border: none;
+            color: var(--gold);
+            cursor: pointer;
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 256px;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 2rem;
+            z-index: 60;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            box-shadow: -5px 0 25px rgba(0,0,0,0.8);
+        }
+        
+        .mobile-menu.active { transform: translateX(0); }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            z-index: 55;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--gold);
+            cursor: pointer;
+        }
+        
+        .mobile-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 4rem;
+        }
+        
+        .mobile-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.25rem;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .mobile-links a:hover { color: var(--gold); }
+        
+        /* Buttons */
+        .btn-gold {
+            background: linear-gradient(135deg, #D4AF37 0%, #C9A227 100%);
+            color: #000;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-gold:hover {
+            background: linear-gradient(135deg, #F4E5A1 0%, #D4AF37 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+        
+        .btn-ghost {
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+        
+        .btn-ghost:hover {
+            background: var(--gold);
+            color: #000;
+        }
+        
+        /* Hero Section */
+        #hero {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        #heroVideo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            object-fit: cover;
+            display: none;
+        }
+        
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.85) 100%);
+            z-index: 2;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 1rem;
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #d1d5db;
+            font-weight: 600;
+        }
+        
+        .hero-description {
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+            color: #9ca3af;
+            max-width: 42rem;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 1rem;
+        }
+        
+        .hero-cta {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            padding: 0 1rem;
+        }
+        
+        .hero-cta a {
+            width: 100%;
+            max-width: 280px;
+            text-align: center;
+        }
+        
+        .scroll-arrow {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            z-index: 20;
+            opacity: 0;
+        }
+        
+        .scroll-arrow a {
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .scroll-arrow a:hover {
+            transform: translateY(5px);
+        }
+        
+        /* Section Styles */
+        section {
+            position: relative;
+            padding: 4rem 1rem;
+            overflow: hidden;
+        }
+        
+        .section-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            background-attachment: scroll;
+        }
+        
+        .section-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+        }
+        
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-align: center;
+            line-height: 1.2;
+        }
+        
+        .section-divider {
+            width: 80px;
+            height: 4px;
+            background: var(--gold);
+            margin: 0 auto 1.5rem;
+        }
+        
+        .section-description {
+            font-size: 1rem;
+            color: #9ca3af;
+            max-width: 42rem;
+            margin: 0 auto 3rem;
+            text-align: center;
+            padding: 0 1rem;
+        }
+        
+        /* Grid Layouts */
+        .grid {
+            display: grid;
+            gap: 3rem;
+        }
+        
+        .grid-cols-2 { grid-template-columns: repeat(1, 1fr); }
+        .grid-cols-4 { grid-template-columns: repeat(1, 1fr); }
+        
+        /* About Section */
+        .about-image-wrapper {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+        
+        .about-image {
+            border: 4px solid var(--gold);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+        
+        .about-badge {
+            position: absolute;
+            bottom: -1rem;
+            right: -1rem;
+            background: var(--gold);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .about-badge p {
+            color: #000;
+            font-weight: 900;
+            font-size: 1.25rem;
+        }
+        
+        .about-content h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .about-text {
+            font-size: 1rem;
+            color: #d1d5db;
+            margin-bottom: 2rem;
+            line-height: 1.75;
+        }
+        
+        .feature-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-icon {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            background: rgba(212, 175, 55, 0.2);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feature-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--gold);
+        }
+        
+        .feature-content h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-content p {
+            color: #9ca3af;
+        }
+        
+        /* Service Cards */
+        .service-card {
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            transition: all 0.4s ease;
+        }
+        
+        .service-card:hover {
+            transform: scale(1.05);
+            border-color: var(--gold);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
+        }
+        
+        .service-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(212, 175, 55, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .service-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: var(--gold);
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+        
+        .service-card p {
+            color: #9ca3af;
+            line-height: 1.75;
+        }
+        
+        /* SOP Blocks */
+        .sop-block {
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid var(--gold);
+            padding: 2rem;
+            border-radius: 0.5rem;
+        }
+        
+        .sop-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--gold);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .sop-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: #000;
+        }
+        
+        .sop-block h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+        
+        .sop-block ul {
+            list-style: none;
+            color: #9ca3af;
+        }
+        
+        .sop-block li {
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        /* Testimonials */
+        .testimonial-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .testimonial-slide {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+        }
+        
+        .testimonial-slide.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        .testimonial-card {
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--gold);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 25px 50px rgba(212, 175, 55, 0.2);
+        }
+        
+        .testimonial-text {
+            font-size: 1rem;
+            color: #d1d5db;
+            line-height: 1.75;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.25rem;
+            color: #000;
+            flex-shrink: 0;
+        }
+        
+        .testimonial-info h4 {
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 0.25rem;
+            font-size: 1rem;
+        }
+        
+        .testimonial-info p {
+            color: #9ca3af;
+            font-size: 0.75rem;
+        }
+        
+        .testimonial-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .testimonial-btn {
+            background: rgba(212, 175, 55, 0.2);
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .testimonial-btn:hover {
+            background: var(--gold);
+            color: #000;
+        }
+        
+        /* Contact Form */
+        .contact-grid {
+            display: grid;
+            gap: 3rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            background: #000;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            color: #fff;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .contact-info {
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 1rem;
+            padding: 2rem;
+            height: fit-content;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .contact-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+        
+        .contact-item-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(212, 175, 55, 0.2);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .contact-item-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--gold);
+        }
+        
+        .contact-item-text p {
+            color: #d1d5db;
+            font-size: 0.875rem;
+        }
+        
+        /* Sticky WhatsApp */
+        .whatsapp-sticky {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 40;
+        }
+        
+        .whatsapp-btn {
+            width: 60px;
+            height: 60px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.5);
+            transition: all 0.3s;
+            animation: pulseGlow 2s infinite;
+        }
+        
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .whatsapp-btn svg {
+            width: 32px;
+            height: 32px;
+            fill: #000;
+        }
+        
+        /* Footer */
+        footer {
+            background: #000;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+        
+        footer p {
+            color: #9ca3af;
+        }
+        
+        footer a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+        
+        /* Responsive */
+        @media (min-width: 640px) {
+            .hero-title { font-size: 3.5rem; }
+            .hero-subtitle { font-size: 1.25rem; }
+            .hero-description { font-size: 1rem; margin-bottom: 3rem; }
+            .hero-cta { flex-direction: row; justify-content: center; }
+            .hero-cta a { width: auto; }
+            .section-title { font-size: 2.5rem; }
+            .section-description { font-size: 1.125rem; }
+            .about-content h2 { font-size: 2.5rem; }
+            .about-image img { height: 450px; }
+            .testimonial-card { padding: 2.5rem; }
+            .testimonial-text { font-size: 1.125rem; }
+            section { padding: 5rem 1rem; }
+        }
+        
+        @media (min-width: 768px) {
+            .nav-links { display: flex; }
+            .mobile-menu-btn { display: none; }
+            .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+            .contact-grid { grid-template-columns: 1fr 1fr; }
+            #heroVideo { display: block; }
+            #hero { 
+                background-attachment: fixed;
+            }
+            .about-image img { height: 500px; }
+            .section-title { font-size: 3rem; }
+            .section-description { font-size: 1.25rem; margin-bottom: 4rem; }
+            .about-content h2 { font-size: 3rem; }
+            .about-text { font-size: 1.125rem; }
+            section { padding: 6rem 1rem; }
+        }
+        
+        @media (min-width: 1024px) {
+            .hero-title { font-size: 5rem; }
+            .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+            .section-bg { background-attachment: fixed; }
+        }
+        
+        @media (min-width: 1280px) {
+            .hero-title { font-size: 6rem; }
+        }
+        
+        @media (max-width: 767px) {
+            #heroVideo { display: none !important; }
+            .whatsapp-sticky { bottom: 1rem; right: 1rem; }
+            .whatsapp-btn { width: 56px; height: 56px; }
+            .whatsapp-btn svg { width: 28px; height: 28px; }
+            nav {
+                background: rgba(0,0,0,0.98);
+                box-shadow: 0 2px 15px rgba(0,0,0,0.8);
+            }
+        }
+        
+        @media (max-width: 479px) {
+            .hero-title { font-size: 2rem; }
+            .hero-subtitle { font-size: 0.875rem; }
+            .hero-description { font-size: 0.8rem; }
+            .section-title { font-size: 1.75rem; }
+            .about-badge p { font-size: 1rem; }
+            .about-badge { padding: 0.5rem 1rem; }
+            .service-card { padding: 1.5rem; }
+            .sop-block { padding: 1.5rem; }
+            .testimonial-card { padding: 1.5rem; }
+            .contact-info { padding: 1.5rem; }
+            nav {
+                background: rgba(0,0,0,0.98);
+                box-shadow: 0 2px 15px rgba(0,0,0,0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div>
+                <h1 class="logo gold-gradient-text" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">XCOACHKART</h1>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="nav-links">
+                <a href="#hero">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#testimonials">Reviews</a>
+                <a href="#contact" class="btn-gold">Book Demo</a>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuBtn" class="mobile-menu-btn">
+                <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu Overlay -->
+        <div id="mobileMenuOverlay" class="mobile-menu-overlay"></div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu">
+            <button id="closeMobileMenu" class="mobile-close">
+                <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <div class="mobile-links">
+                <a href="#hero" class="mobile-link">Home</a>
+                <a href="#about" class="mobile-link">About</a>
+                <a href="#services" class="mobile-link">Services</a>
+                <a href="#testimonials" class="mobile-link">Reviews</a>
+                <a href="#contact" class="mobile-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <!-- Background Video (Desktop Only) -->
+        <video id="heroVideo" autoplay muted loop playsinline preload="auto">
+            <source src="https://videos.pexels.com/video-files/4761635/4761635-uhd_2560_1440_25fps.mp4" type="video/mp4">
+            <source src="https://cdn.coverr.co/videos/coverr-man-doing-push-ups-6571/1080p.mp4" type="video/mp4">
+        </video>
+        
+        <!-- Overlay -->
+        <div class="video-overlay"></div>
+        
+        <!-- Content -->
+        <div class="hero-content fade-in-up">
+            <h1 class="hero-title">
+                <span class="gold-gradient-text">DISCIPLINE.</span><br>
+                <span>STRENGTH.</span><br>
+                <span class="gold-gradient-text">TRANSFORMATION.</span>
+            </h1>
+            
+            <p class="hero-subtitle">Premium Fitness Coaching by Ex-IAF Instructor</p>
+            <p class="hero-description">Your doorstep fitness solution for families, beginners, and professionals. Safety-first approach with military precision.</p>
+            
+            <div class="hero-cta">
+                <a href="#contact" class="btn-gold" style="padding: 1rem 2.5rem; font-size: 1.125rem;">
+                    BOOK FREE DEMO
+                </a>
+                <a href="https://wa.me/919876543210?text=Hi%2C%20I%20want%20to%20know%20more%20about%20XCoachKart" target="_blank" class="btn-ghost" style="padding: 1rem 2.5rem; font-size: 1.125rem;">
+                    WHATSAPP NOW
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="section-bg" style="background-image: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1600');"></div>
+        <div class="section-overlay"></div>
+        
+        <div class="container">
+            <div class="grid grid-cols-2" style="align-items: center;">
+                <!-- Left: Image -->
+                <div class="about-image-wrapper">
+                    <div class="about-image">
+                        <!-- Replace with actual trainer image -->
+                        <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800" alt="Ex-IAF Trainer">
+                    </div>
+                    <div class="about-badge">
+                        <p>EX-IAF</p>
+                    </div>
+                </div>
+                
+                <!-- Right: Content -->
+                <div class="fade-in-up">
+                    <h2>
+                        <span class="gold-gradient-text">YOUR FITNESS</span><br>
+                        <span>TRANSFORMATION</span>
+                    </h2>
+                    
+                    <div class="section-divider" style="margin-left: 0;"></div>
+                    
+                    <p class="about-text">
+                        Bringing military-grade discipline and safety-first training directly to your doorstep. With years of experience in the Indian Air Force, I combine proven techniques with personalized attention to help you achieve your fitness goals.
+                    </p>
+                    
+                    <div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 20 20">
+                                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                                    <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div class="feature-content">
+                                <h3>Ex-IAF Discipline</h3>
+                                <p>Military precision meets personalized fitness coaching</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div class="feature-content">
+                                <h3>Safety-First Approach</h3>
+                                <p>Injury prevention and proper form prioritized in every session</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 20 20">
+                                    <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
+                                </svg>
+                            </div>
+                            <div class="feature-content">
+                                <h3>Doorstep Convenience</h3>
+                                <p>Train at home with professional equipment and guidance</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 20 20">
+                                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
+                                </svg>
+                            </div>
+                            <div class="feature-content">
+                                <h3>For Everyone</h3>
+                                <p>Families, beginners, and professionals all welcome</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="section-bg" style="background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600');"></div>
+        <div class="section-overlay" style="background: rgba(0,0,0,0.9);"></div>
+        
+        <div class="container">
+            <div class="fade-in-up">
+                <h2 class="section-title">
+                    <span class="gold-gradient-text">OUR PROGRAMS</span>
+                </h2>
+                <div class="section-divider"></div>
+                <p class="section-description">Customized fitness solutions designed to match your goals, schedule, and fitness level</p>
+            </div>
+            
+            <div class="grid grid-cols-4">
+                <!-- Service Card 1 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 20 20">
+                            <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"></path>
+                        </svg>
+                    </div>
+                    <h3>One-to-One Coaching</h3>
+                    <p>Personalized attention with customized workout plans tailored to your specific goals and fitness level.</p>
+                </div>
+                
+                <!-- Service Card 2 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 20 20">
+                            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
+                        </svg>
+                    </div>
+                    <h3>Small Group Sessions</h3>
+                    <p>Train with friends or family in groups of 2-4. Cost-effective with the same quality coaching.</p>
+                </div>
+                
+                <!-- Service Card 3 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3>Goal-Based Programs</h3>
+                    <p>Structured programs for weight loss, muscle gain, endurance building, or sports-specific training.</p>
+                </div>
+                
+                <!-- Service Card 4 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 20 20">
+                            <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"></path>
+                            <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"></path>
+                        </svg>
+                    </div>
+                    <h3>Online Coaching</h3>
+                    <p>Virtual training sessions with real-time guidance, perfect for busy schedules or remote locations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOP / Quality Section -->
+    <section>
+        <div class="section-bg" style="background-image: url('https://images.unsplash.com/photo-1556817411-31ae72fa3ea0?w=1600');"></div>
+        <div class="section-overlay"></div>
+        
+        <div class="container">
+            <div class="fade-in-up">
+                <h2 class="section-title">
+                    <span>OUR</span> <span class="gold-gradient-text">STANDARDS</span>
+                </h2>
+                <div class="section-divider"></div>
+                <p class="section-description">Military-grade discipline meets premium fitness coaching</p>
+            </div>
+            
+            <div class="grid grid-cols-4">
+                <!-- SOP Block 1 -->
+                <div class="sop-block">
+                    <div class="sop-icon">
+                        <svg viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3>Standard 60-Min Sessions</h3>
+                    <ul>
+                        <li>• Warm-up & mobility work</li>
+                        <li>• Main workout routine</li>
+                        <li>• Cool-down & stretching</li>
+                        <li>• Progress tracking</li>
+                    </ul>
+                </div>
+                
+                <!-- SOP Block 2 -->
+                <div class="sop-block">
+                    <div class="sop-icon">
+                        <svg viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3>Safety-First SOP</h3>
+                    <ul>
+                        <li>• Form correction priority</li>
+                        <li>• Injury prevention focus</li>
+                        <li>• Equipment safety checks</li>
+                        <li>• Emergency protocols</li>
+                    </ul>
+                </div>
+                
+                <!-- SOP Block 3 -->
+                <div class="sop-block">
+                    <div class="sop-icon">
+                        <svg viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3>7-Day Onboarding</h3>
+                    <ul>
+                        <li>• Fitness assessment</li>
+                        <li>• Goal setting workshop</li>
+                        <li>• Customized plan design</li>
+                        <li>• Nutrition guidance basics</li>
+                    </ul>
+                </div>
+                
+                <!-- SOP Block 4 -->
+                <div class="sop-block">
+                    <div class="sop-icon">
+                        <svg viewBox="0 0 20 20">
+                            <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"></path>
+                        </svg>
+                    </div>
+                    <h3>Performance KPIs</h3>
+                    <ul>
+                        <li>• Weekly progress reviews</li>
+                        <li>• Measurements tracking</li>
+                        <li>• Strength benchmarks</li>
+                        <li>• Goal milestone tracking</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials">
+        <div class="section-bg" style="background-image: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1600'); filter: blur(8px);"></div>
+        <div class="section-overlay"></div>
+        
+        <div class="container">
+            <div class="fade-in-up">
+                <h2 class="section-title">
+                    <span class="gold-gradient-text">CLIENT SUCCESS STORIES</span>
+                </h2>
+                <div class="section-divider"></div>
+                <p class="section-description">Real transformations from real people</p>
+            </div>
+            
+            <div class="testimonial-container">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-slide active">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">
+                            "The military discipline combined with personalized attention has been game-changing. I've lost 15 kg in 4 months and feel stronger than ever. The doorstep service makes it so convenient for my busy schedule."
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">RK</div>
+                            <div class="testimonial-info">
+                                <h4>Rajesh Kumar</h4>
+                                <p>IT Professional, Weight Loss Journey</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">
+                            "As a beginner, I was intimidated by fitness. The safety-first approach and patient coaching helped me build confidence. Now my whole family trains together, and it's become our favorite bonding activity!"
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">PS</div>
+                            <div class="testimonial-info">
+                                <h4>Priya Sharma</h4>
+                                <p>Homemaker, Family Fitness</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">
+                            "The goal-based program for marathon training was exactly what I needed. The structured approach and performance tracking helped me achieve my personal best. Highly recommend for serious athletes!"
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">AM</div>
+                            <div class="testimonial-info">
+                                <h4>Amit Mehta</h4>
+                                <p>Marketing Executive, Marathon Runner</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Controls -->
+                <div class="testimonial-controls">
+                    <button id="prevTestimonial" class="testimonial-btn">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+                    <button id="nextTestimonial" class="testimonial-btn">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="section-bg" style="background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600');"></div>
+        <div class="section-overlay"></div>
+        
+        <div class="container">
+            <div class="fade-in-up">
+                <h2 class="section-title">
+                    <span class="gold-gradient-text">START YOUR JOURNEY</span>
+                </h2>
+                <div class="section-divider"></div>
+                <p class="section-description">Book your free demo session today</p>
+            </div>
+            
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                            <p class="error-message" id="nameError">Please enter your name</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                            <p class="error-message" id="phoneError">Please enter a valid 10-digit phone number</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="goal">Your Fitness Goal *</label>
+                            <textarea id="goal" name="goal" placeholder="Tell us about your fitness goals..." required></textarea>
+                            <p class="error-message" id="goalError">Please tell us about your goals</p>
+                        </div>
+                        
+                        <button type="submit" class="btn-gold" style="width: 100%; padding: 1rem; font-size: 1.125rem;">
+                            SEND ENQUIRY VIA WHATSAPP
+                        </button>
+                        
+                        <a href="tel:+919876543210" class="btn-ghost" style="width: 100%; padding: 1rem; font-size: 1.125rem; display: block; text-align: center; margin-top: 1rem;">
+                            OR CALL NOW
+                        </a>
+                    </form>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <svg viewBox="0 0 20 20">
+                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+                            </svg>
+                        </div>
+                        <div class="contact-item-text">
+                            <p><strong style="color: var(--gold);">Phone</strong><br>+91 98765 43210</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <svg viewBox="0 0 20 20">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                            </svg>
+                        </div>
+                        <div class="contact-item-text">
+                            <p><strong style="color: var(--gold);">Email</strong><br>info@xcoachkart.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <svg viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="contact-item-text">
+                            <p><strong style="color: var(--gold);">Service Area</strong><br>Gurugram, Haryana & NCR</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <svg viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="contact-item-text">
+                            <p><strong style="color: var(--gold);">Working Hours</strong><br>Mon-Sat: 6 AM - 9 PM<br>Sunday: 7 AM - 12 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 XCoachKart. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            <p style="margin-top: 1rem; font-size: 0.875rem;">Premium Fitness Coaching by Ex-IAF Instructor</p>
+        </div>
+    </footer>
+
+    <!-- Sticky WhatsApp Button -->
+    <div class="whatsapp-sticky">
+        <a href="https://wa.me/919876543210?text=Hi%2C%20I%20want%20to%20know%20more%20about%20XCoachKart" target="_blank" class="whatsapp-btn">
+            <svg viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path>
+            </svg>
+        </a>
+    </div>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.querySelector('nav');
+        let lastScroll = 0;
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        
+        function openMobileMenu() {
+            mobileMenu.classList.add('active');
+            mobileMenuOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMobileMenuFn() {
+            mobileMenu.classList.remove('active');
+            mobileMenuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        mobileMenuBtn.addEventListener('click', openMobileMenu);
+        closeMobileMenu.addEventListener('click', closeMobileMenuFn);
+        
+        // Close menu when clicking on overlay
+        mobileMenuOverlay.addEventListener('click', closeMobileMenuFn);
+        
+        // Close menu when clicking on any link
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', closeMobileMenuFn);
+        });
+        
+        // Close mobile menu with escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                closeMobileMenuFn();
+            }
+        });
+        
+        // Hero Video Handling
+        const heroVideo = document.getElementById('heroVideo');
+        if (heroVideo && window.innerWidth >= 768) {
+            heroVideo.play().catch(err => {
+                console.log('Video autoplay failed:', err);
+                // Fallback: video won't play, background image will show
+            });
+        }
+        
+        // Testimonial Slider
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial-slide');
+        const prevBtn = document.getElementById('prevTestimonial');
+        const nextBtn = document.getElementById('nextTestimonial');
+        
+        function showTestimonial(index) {
+            testimonials.forEach((testimonial, i) => {
+                testimonial.classList.remove('active');
+                if (i === index) {
+                    testimonial.classList.add('active');
+                }
+            });
+        }
+        
+        function nextTestimonial() {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(currentTestimonial);
+        }
+        
+        function prevTestimonialFn() {
+            currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+            showTestimonial(currentTestimonial);
+        }
+        
+        nextBtn.addEventListener('click', nextTestimonial);
+        prevBtn.addEventListener('click', prevTestimonialFn);
+        
+        // Auto-slide testimonials
+        setInterval(nextTestimonial, 5000);
+        
+        // Form Validation
+        const contactForm = document.getElementById('contactForm');
+        const nameInput = document.getElementById('name');
+        const phoneInput = document.getElementById('phone');
+        const goalInput = document.getElementById('goal');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+            
+            let isValid = true;
+            
+            // Validate name
+            if (nameInput.value.trim() === '') {
+                document.getElementById('nameError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate phone
+            const phoneRegex = /^[0-9]{10}$/;
+            if (!phoneRegex.test(phoneInput.value.replace(/\s/g, ''))) {
+                document.getElementById('phoneError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate goal
+            if (goalInput.value.trim() === '') {
+                document.getElementById('goalError').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Create WhatsApp message
+                const message = `Hi, I'm ${nameInput.value}. 
+
+Phone: ${phoneInput.value}
+
+My Fitness Goal: ${goalInput.value}
+
+I'd like to book a free demo session with XCoachKart.`;
+                
+                const whatsappURL = `https://wa.me/919876543210?text=${encodeURIComponent(message)}`;
+                window.open(whatsappURL, '_blank');
+                
+                // Reset form
+                contactForm.reset();
+            }
+        });
+        
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Fade-in animation on scroll with stagger effect
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Add stagger delay based on element index
+                    setTimeout(() => {
+                        if (entry.target.classList.contains('slide-in-left')) {
+                            entry.target.style.animation = 'slideInLeft 0.8s ease-out forwards';
+                        } else if (entry.target.classList.contains('slide-in-right')) {
+                            entry.target.style.animation = 'slideInRight 0.8s ease-out forwards';
+                        } else {
+                            entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                        }
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all elements with animation classes
+        document.querySelectorAll('.fade-in-up, .slide-in-left, .slide-in-right').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Service cards stagger animation
+        const serviceCards = document.querySelectorAll('.service-card');
+        const serviceObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '0';
+                        entry.target.style.transform = 'translateY(30px)';
+                        entry.target.style.transition = 'all 0.6s ease-out';
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }, 50);
+                    }, index * 150);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        serviceCards.forEach(card => {
+            serviceObserver.observe(card);
+        });
+    </script>
+</body>
+</html>
